@@ -1,0 +1,28 @@
+<h1>Public Profile</h1>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <%= form_for(@user) do |f| %>
+        
+            <%= render 'shared/error_messages', object: f.object %>
+
+            <%= f.label :name, "名前" %>
+            <%= f.text_field :name %>
+
+            <%= f.label :area, "住まい" %>
+            <%= f.text_field :area %>
+            
+            <%= f.label :profile, "プロフィール" %>
+            <%= f.text_area :profile %>
+            
+            <%= f.label :email, "メールアドレス" %>
+            <%= f.email_field :email %>
+
+            <%#= f.label :password %>
+            <%#= f.password_field :password %>
+
+            <%= f.submit "Update Profile", class: "btn btn-large btn-primary" %>
+        
+        <% end %>
+    </div>
+</div>

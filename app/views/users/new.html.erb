@@ -6,17 +6,23 @@
         
             <%= render 'shared/error_messages', object: f.object %>
         
-            <%= f.label :name %>
+            <%= f.label :name, "名前"%>
             <%= f.text_field :name %>
+
+            <%= f.label :area, "住まい"%>
+            <%= f.text_field :area %>
             
-            <%= f.label :email %>
-            <%= f.text_field :email %>
+            <%= f.label :profile, "プロフィール"%>
+            <%= f.text_area :profile, placeholder: '自由に自己紹介を書いてください。' %>
             
-            <%= f.label :password %>
-            <%= f.password_field :password %>
+            <%= f.label :email, "メールアドレス"%>
+            <%= f.email_field :email %>
+
+            <%= f.label :password, "パスワード" %>
+            <%= f.password_field :password , placeholder: '6文字以上' %>
             
-            <%= f.label :password_confirmation, "Confirmation" %>
-            <%= f.password_field :password_confirmation %>
+            <%= f.label :password_confirmation, "パスワード再確認" %>
+            <%= f.password_field :password_confirmation, placeholder: 'パスワードを再入力' %>
             
             <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
         
