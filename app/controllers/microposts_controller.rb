@@ -16,13 +16,10 @@ class MicropostsController < ApplicationController
         return redirect_to root_url if @micropost.nil?
         @micropost.destroy
         flash[:success] = "Micropost deleted"
+        # request.refefferにリダイレクトするが、
+        # リクエストの仕方によってreferrerに値が入ってにない場合はroot_urlにリダイレクトする
         redirect_to request.referrer || root_url
-        # 以下について時間があれば調べておく。
-        # redirect_to request.referrer
-        # redirect_to root_url
-        # redirect_to root_path
     end
-    
     
     private
     def micropost_params
