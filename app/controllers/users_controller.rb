@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    # @users = User.all
+    # @users = User.all だと全てのuserのものが入ってしまうのでだめ。
+    
+    @microposts = @user.microposts # ユーザーに紐付いたマイクロポストを代入
   end
   
   def new
@@ -17,7 +19,7 @@ class UsersController < ApplicationController
     #  # redirect_to user_path(@user)
     if @user.save
       flash[:success] = "Welcome to the Sample App!"
-      session[:user_id] = @user.id
+      session[:user_id] = @user.id # リダイレクト前にセッションを使う方が望ましい
       redirect_to @user
     else
       render 'new'
@@ -26,14 +28,14 @@ class UsersController < ApplicationController
   
 
   def edit
-    # @user = User.find(params[:id])
-    @user = User.find(current_user.id)
+    # @user = User.find(params[:id]) # アドレスバーのusers/の番号を変更したらRailsが他userの情報を取得してしまう。
+    @user = User.find(current_user.id) # 上記を避けるためにcurrent_userのIDを取得するようにする
   end
 
 
   def update
     # @user = User.find(params[:id])
-    @user = User.find(current_user.id)
+    @user = User.find(current_user.id) # current_userのidを使って、ログインしていない他のuserのデータをupdateできないようにする
     if @user.update(user_params)
       # 保存に成功した場合はTopページへリダイレクト
       redirect_to @user , notice: 'プロフィールを編集しました'

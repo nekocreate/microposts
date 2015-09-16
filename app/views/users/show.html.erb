@@ -1,5 +1,24 @@
-<h1>
-    <%= gravatar_for @user %>
-    <%= @user.name %>
-</h1>
-<%= @user.inspect %>
+<div class="row">
+   <aside class="col-md-4">
+       <section class="user_info">
+            <h1>
+                <%= gravatar_for @user %>
+                <%= @user.name %>
+            </h1>
+            <%#= @user.inspect %><%# 確認のためこのコードはもう暫く残しておきたい。 %>
+       </section>
+   </aside>
+   <div class="col-md-8">
+       <% if @user.microposts.any? %>
+           <h3>Microposts (<%= @user.microposts.count %>)</h3>
+           <%#= @microposts.inspect %><%# 確認のためこのコードはもう暫く残しておきたい。 %>
+           <ol class="microposts">
+               <%# @micropostsのハッシュオブジェクト(@micropostsに紐付けられているcontentとuser_idなどの値)が
+               パーシャルテンプレート_micropost.html.erbに渡されrenderされる。
+               このとき、eachメソッドと同様の処理が行われるので、投稿順に繰り返される。
+               パーシャル_micropost.html.erbの内容を自動で繰り返してくれるので超便利！%>
+               <%= render @microposts %>
+           </ol>
+        <% end %>
+   </div>
+</div>
