@@ -1,0 +1,9 @@
+<% if current_user != @user %><%# current_userと表示しているページのuserが違う場合 つまり他userのページを表示している場合%>
+    <div id="follow_form">
+    <% if current_user.following?(@user) %><%# フォローしている場合 %>
+        <%= render 'unfollow' %><%# _unfollow.html.erbをrender %>
+    <% else %>
+        <%= render 'follow' %><%# そうでなければ_follow.html.erbをrender %>
+    <% end %>
+    </div>
+<% end %>

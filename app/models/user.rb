@@ -8,4 +8,41 @@ class User < ActiveRecord::Base
     validates :password, length: { minimum: 6 } , on: :create
     validates :password, length: { minimum: 6 } , on: :update, allow_blank: true
     has_many :microposts # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
+    
+    ### あるuserがフォローしている人の実装 ここから###
+    # class_nameとしてRelationshipモデルを指定
+    # 外部キー foreign_key として follower_id を明示的に指定
+    has_many :following_relationships, class_name: "Relationship",
+                                       foreign_key: "follower_id",
+                                       dependent:   :destroy
+    # has_many～throughを使い、following_usersはfollowing_relationship経由でデータを取得する
+    # sourceパラメータで、folowing_usersはfollowdのidの集合体であることを明示的に指定
+    has_many :following_users, through: :following_relationships, source: :followed
+    ### あるuserがフォローしている人の実装 ここまで###
+    
+    ### フォローされている人の実装 ここから ###
+    # class_nameとしてRelationshipモデルを指定
+    # 外部キー foreign_key として followed_id を明示的に指定
+    has_many :follower_relationships, class_name: "Relationship",
+                                      foreign_key: "followed_id",
+                                      dependent:   :destroy
+    # has_many～throughを使い、follower_usersはfollower_relationships経由でデータを取得する
+    # sourceパラメータで、follower_usersはfollowerのidの集合体であることを明示的に指定
+    has_many :follower_users, through: :follower_relationships, source: :follower
+    ### フォローされている人の実装 ここまで ###
+    
+    # 他のユーザーをフォローする
+    def follow(other_user)
+        following_relationships.create(followed_id: other_user.id)
+    end
+    
+    # フォローしているユーザーをアンフォローする
+    def unfollow(other_user)
+        following_relationships.find_by(followed_id: other_user.id).destroy
+    end
+    
+    # あるユーザーをフォローしているかどうか？
+    def following?(other_user)
+        following_users.include?(other_user)
+    end
 end

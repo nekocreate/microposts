@@ -30,5 +30,9 @@ module Microposts
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # remote: true オプションが指定されたform_tagでトークンを付与する
+    # Ajaxでリクエストを送信する際の、データを安全にやり取りするための、トークンを付与するための定義
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end

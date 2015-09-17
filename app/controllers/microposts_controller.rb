@@ -1,4 +1,6 @@
 class MicropostsController < ApplicationController
+    # ApplicationControllerにあるlogged_in_userメソッドを実行
+    # ログインしている場合はcreateメソッドを実行
     before_action :logged_in_user, only: [:create]
     
     def create
