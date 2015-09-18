@@ -26,12 +26,10 @@ class UsersController < ApplicationController
     end
   end
   
-
   def edit
     # @user = User.find(params[:id]) # アドレスバーのusers/の番号を変更したらRailsが他userの情報を取得してしまう。
     @user = User.find(current_user.id) # 上記を避けるためにcurrent_userのIDを取得するようにする
   end
-
 
   def update
     # @user = User.find(params[:id])
@@ -45,8 +43,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def followings
+    begin
+      # Userのパラメータ名が:idのものを見つけて@userにいれる。
+      @user = User.find(params[:id])
+      # 自動的に followings.html.erbが呼ばれる
+    rescue
+      flash[:danger] = 'そのユーザーは存在しません'
+      redirect_to root_path
+    end
+  end
 
-  
+  def followers
+    begin
+      # Userのパラメータ名が:idのものを見つけて@userにいれる。
+      @user = User.find(params[:id])
+      # 自動的に followers.html.erbが呼ばれる
+    rescue
+      flash[:danger] = 'そのユーザーは存在しません'
+      redirect_to root_path
+    end
+  end
+
+
   private
   
   def user_params

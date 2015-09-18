@@ -5,8 +5,27 @@
                 <%= gravatar_for @user %>
                 <%= @user.name %>
             </h1>
+            <div>住まい：<%= @user.area %></div>
+            <div>プロフィール：<%= @user.profile %></div>
             <%#= @user.inspect %><%# 確認のためこのコードはもう暫く残しておきたい。 %>
        </section>
+        <section>
+            <table class="table" border="0">
+                <tr>
+                    <td>
+                        <div class="text-center">ツイート<br /><%= @microposts.count %></div>
+                    </td>
+                    <td>
+                        <div class="text-center"><%= link_to "フォロー", followings_user_path(@user.id) %><br />
+                        <%= @user.following_relationships.length %></div>
+                    </td>
+                    <td>
+                        <div class="text-center"><%= link_to "フォロワー", followers_user_path(@user.id) %><br />
+                        <%= @user.follower_relationships.length %></div>
+                    </td>
+                </tr>
+            </table>
+        </section>
    </aside>
    <div class="col-md-8">
        <%= render 'follow_form' if logged_in? %><%# ログインしている場合は部分テンプレートfollow_formをrender %>
@@ -23,3 +42,5 @@
         <% end %>
    </div>
 </div>
+
+

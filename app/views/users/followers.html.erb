@@ -1,0 +1,31 @@
+<div class="row">
+   <aside class="col-md-4">
+       <section class="user_info">
+            <h1>
+                <%#= gravatar_for @user %><%# gravatarで生成されるimgタグにリンクを貼った %>
+                <%= link_to (gravatar_for @user), user_path(@user.id) %>
+                <%= @user.name %>
+            </h1>
+            <%#= @user.inspect %><%# 確認のためこのコードはもう暫く残しておきたい。 %>
+       </section>
+   </aside>
+
+    <h2 class="h4"><%= @user.name %>をフォローしている人</h2>
+    <div class="col-md-8">
+        <% @user.follower_relationships.each do |f| %>
+        <% @followeruser = User.find(f.follower_id) %>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <%= link_to (gravatarmini_for @followeruser), user_path(@followeruser.id) %>
+                    <div class="fwl-username text-center">
+                        <%= link_to @followeruser.name, user_path(@followeruser.id) %>
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">住まい：<%= @followeruser.area %></li>
+                    <li class="list-group-item">プロフィール：<%= @followeruser.profile %></li>
+                </ul>
+            </div>
+        <% end %>
+    </div>
+</div>
