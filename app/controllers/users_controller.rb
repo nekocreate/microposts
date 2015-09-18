@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
   def followers
     begin
-      # Userのパラメータ名が:idのものを見つけて@userにいれる。
+      # Userのパラメータ名が:idのものを見つけて@userにいれる
       @user = User.find(params[:id])
       # 自動的に followers.html.erbが呼ばれる
     rescue
