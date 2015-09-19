@@ -1,9 +1,7 @@
 <div class="row">
     <h1>登録ユーザー全員</h1>
-    <%# kaminariによるページネーション表示 %>
-    <%= paginate @kaminari %>
+
     <div class="col-md-12">
-        <% @users = User.all %>
         <%= render partial: 'alluser', collection: @users, as: 'localuser' %>
         <%# 部分テンプレートが、renderされるとき、@usersの要素の数だけループされる
             部分テンプレートはalluser
@@ -12,4 +10,6 @@
             asを指定しなければpartialテンプレート名がlocal変数となるけど。。慣れないうちはわかりにくいから。
         %>
     </div>
+    <%# kaminariによるページネーション表示 %>
+    <%= paginate @users %>
 </div>

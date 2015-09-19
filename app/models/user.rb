@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
     validates :password, length: { minimum: 6 }, on: :create
     validates :profile, presence: true, length: { maximum: 255 }, on: :update
     validates :area, length: { maximum: 32 }, on: :update
+    
+    paginates_per 5
 
     has_many :microposts # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
     

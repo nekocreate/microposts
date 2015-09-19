@@ -198,21 +198,6 @@ span.picture {
 
 
 
-/* 追加 2015年9月19日 */
-.row {
-  padding-top:150px;
-}
-
-@media screen and (min-width : 768px){
- #logo {
-  float: left;
- }
- .row {
-  padding: 0;
- }
-}
-
-
 /* kaminari */
 .pagination a, .pagination span.current, .pagination span.gap {
     float: left;
@@ -252,3 +237,23 @@ span.picture {
         border: none;
     }
 }
+
+
+
+
+
+/* 追加 2015年9月19日 */
+.row {
+  padding-top:150px;
+}
+
+@media screen and (min-width : 768px){
+ #logo {
+  float: left;
+ }
+ .row {
+  padding: 0;
+ }
+}
+
+

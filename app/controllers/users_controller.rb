@@ -69,7 +69,7 @@ class UsersController < ApplicationController
 
   def index
     # kaminari の設定 1ページにいくつ表示させるかを.par()の引数に
-    @kaminari = User.order("id").page(params[:page]).per(5) 
+    @users = User.order(":id").page(params[:page]).per(5)
   end
   
   # userの動作検証用
