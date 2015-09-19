@@ -9,11 +9,14 @@
             <%= f.label :name, "名前"%>
             <%= f.text_field :name %>
 
-            <%= f.label :area, "住まい"%>
-            <%= f.text_field :area %>
+
+            <%# Signup では、名前・メールアドレス・パスワードの項目だけにする。
+            確かにその方がユーザービリティがよい %>
+            <%#= f.label :area, "住まい"%>
+            <%#= f.text_field :area %>
             
-            <%= f.label :profile, "プロフィール"%>
-            <%= f.text_area :profile, placeholder: '自由に自己紹介を書いてください。' %>
+            <%#= f.label :profile, "プロフィール"%>
+            <%#= f.text_area :profile, placeholder: '自由に自己紹介を書いてください。' %>
             
             <%= f.label :email, "メールアドレス"%>
             <%= f.email_field :email %>
