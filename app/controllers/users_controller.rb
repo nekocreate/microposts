@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  # このUserController内の処理を実行する前にまず行うこと！
+  before_action :admin_user, only: [:edit, :update]
   
   def show
     @user = User.find(params[:id])
@@ -65,11 +67,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def index
+    # kaminari の設定 1ページにいくつ表示させるかを.par()の引数に
+    @kaminari = User.order("id").page(params[:page]).per(5) 
+  end
+  
+  # userの動作検証用
+  def test
+  end
+  
 
   private
   
   def user_params
     # params.require(:user).permit(:name, :email, :password, :password_confirmation)
     params.require(:user).permit(:name, :email, :area, :profile, :password, :password_confirmation)
+  end
+  
+  
+  def admin_user
+    @user = User.find(params[:id]) # 現在のURLの:idに一致するユーザーを@userに代入
+    redirect_to root_path unless current_user == @user # current_userと@userが別人ならroot_pathにリダイレクト
   end
 end

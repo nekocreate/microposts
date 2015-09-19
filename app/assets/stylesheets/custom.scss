@@ -53,7 +53,7 @@ p {
 /* header */
 
 #logo {
-  float: left;
+  /*float: left;*/ /* 2015年9月19日削除 */
   margin-right: 10px;
   font-size: 1.7em;
   color: #fff;
@@ -195,3 +195,60 @@ span.picture {
   }
 }
 
+
+
+
+/* 追加 2015年9月19日 */
+.row {
+  padding-top:150px;
+}
+
+@media screen and (min-width : 768px){
+ #logo {
+  float: left;
+ }
+ .row {
+  padding: 0;
+ }
+}
+
+
+/* kaminari */
+.pagination a, .pagination span.current, .pagination span.gap {
+    float: left;
+    padding: 0 14px;
+    line-height: 38px;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #DDD;
+    border-left-width: 0;
+}
+
+.pagination {
+    border-left: 1px solid #ddd;
+    .first{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .prev {
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .page{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .next{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .last{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+}

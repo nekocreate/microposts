@@ -10,8 +10,10 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
-      get 'followings'
-      get 'followers'
+      get :followings, :followers # このようにカンマ区切りでリファクタリングできる
+      # get 'followings'
+      # get 'follower'
+      get 'test' # userのテスト用
     end
   end
   

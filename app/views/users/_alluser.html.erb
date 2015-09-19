@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <%= link_to (gravatarmini_for localuser), user_path(localuser.id) %>
+        <div class="fwl-username text-center">
+            <%= link_to localuser.name, user_path(localuser.id) %>
+        </div>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">住まい：<%= localuser.area %></li>
+        <li class="list-group-item">プロフィール：<%= localuser.profile %></li>
+    </ul>
+</div>

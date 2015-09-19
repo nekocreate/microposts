@@ -30,6 +30,10 @@ gem 'bootstrap-sass'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+
+# kaminari ページネーション表示用 2015年9月20日追加
+gem 'kaminari'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

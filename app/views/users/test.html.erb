@@ -1,0 +1,57 @@
+@user = User.find(params[:id])　は<br />
+ルートの設定で生成されるURL（現在表示しているURL）の中の「:id」をもとに<br />
+usersテーブルから一致するレコードを探しだし@userに代入している<br />
+<% @user = User.find(params[:id]) %>
+@userに入っているもの
+<p><%= @user.inspect %></p>
+<hr />
+
+ソートしたもの<br />
+<%#= @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc) %>
+<%#= @feed_items.inspect %>
+
+<br />
+
+ソートしてないもの<br />
+<%#= @feed_items = current_user.feed_items.includes(:user) %>
+<%#= @feed_items.inspect %>
+
+<hr />
+<%= @feed_items = current_user.feed_items %>
+<%= @feed_items.inspect %>
+
+<hr />
+<%#= render 'shared/feed' %>
+
+<%= render @feed_items %>
+
+<hr />
+
+
+<hr />
+<%# @user = User.find(params[:id]) %>
+<%#= render partial: 'user', locals: { name: @user.name } %>
+
+<% @users = User.all %>
+<%= render partial: 'shared/alluser', collection: @users, as: 'localuser' %>
+
+
+
+<%#= render @users %>
+
+<hr />
+
+<%= render @user.microposts %>
+
+<hr />
+<hr />
+<hr />
+<% @feed_items.each do |micropost| %>
+	<%= render partial: 'microposts/micropost', locals: { micropost: micropost } %>
+<% end %>
+
+<hr />
+<hr />
+<%= @user.microposts.inspect %>
+<hr />
+

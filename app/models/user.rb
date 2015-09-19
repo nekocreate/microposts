@@ -4,9 +4,10 @@ class User < ActiveRecord::Base
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
     has_secure_password
-    validates :profile, presence: true, length: { maximum: 255 }
-    validates :password, length: { minimum: 6 } , on: :create
-    validates :password, length: { minimum: 6 } , on: :update, allow_blank: true
+    validates :password, length: { minimum: 6 }, on: :create
+    validates :profile, presence: true, length: { maximum: 255 }, on: :update
+    validates :area, length: { maximum: 32 }, on: :update
+
     has_many :microposts # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
     
     ### あるuserがフォローしている人の実装 ここから###
@@ -44,5 +45,11 @@ class User < ActiveRecord::Base
     # あるユーザーをフォローしているかどうか？
     def following?(other_user)
         following_users.include?(other_user)
+    end
+    
+    # user_idがフォローしているユーザーと自分のつぶやきを取得して配列で返す。
+    # 配列同士を +で要素を足し合わせてる。
+    def feed_items
+        Micropost.where(user_id: following_user_ids + [self.id])
     end
 end

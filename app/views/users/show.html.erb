@@ -37,7 +37,14 @@
                パーシャルテンプレート_micropost.html.erbに渡されrenderされる。
                このとき、eachメソッドと同様の処理が行われるので、投稿順に繰り返される。
                パーシャル_micropost.html.erbの内容を自動で繰り返してくれるので超便利！%>
+               
                <%= render @microposts %>
+               <%# このshow.html以外のテンプレートで使う場合は、@user.micropostsとしなければエラーになった %>
+
+                <%# 上記は下記と同じ処理を行っている %>
+                <%# @microposts.each do |micropost| %>
+                <%#= render partial: 'microposts/micropost', locals: { micropost: micropost } %>
+                <%# end %>
            </ol>
         <% end %>
    </div>
