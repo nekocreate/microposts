@@ -34,6 +34,9 @@ gem 'bcrypt', '~> 3.1.7'
 # kaminari ページネーション表示用 2015年9月20日追加
 gem 'kaminari'
 
+# carrierwave 画像アップローダ
+gem 'carrierwave'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
