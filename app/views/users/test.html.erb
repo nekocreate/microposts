@@ -1,5 +1,25 @@
+
+<button type="submit" class="btn btn-primary">
+  <i class="fa fa-retweet"></i>
+</button>
+
+<hr />
+<a data-confirm="You sure?" rel="nofollow" data-method="delete" href="/microposts/120"><i class="fa fa-trash-o"></i></a>
+<hr />
+
+
+
+
 aaaaaaaaaa
 
+<hr />
+
+<%= image_tag @user.profileimage, size: '50x50' %>
+<hr />
+<% if @user.profileimage? %>
+プロフ画像あるよ
+<% end %>
+<hr />
 <%= current_user.microposts.find_by_retweetid(80).inspect %>
 
 <hr />

@@ -170,6 +170,7 @@ aside {
     }
   }
   .timestamp {
+    /*float: left;*/ /* 2015年9月23日追記 */
     color: $gray-light;
     display: block;
     margin-left: 60px;
@@ -267,4 +268,6 @@ span.picture {
 	background-color: lightpink;
 	display:inline !important;
 }
+
+
 

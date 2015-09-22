@@ -81,6 +81,7 @@ class UsersController < ApplicationController
   
   # userの動作検証用
   def test
+    @user= User.find(params[:id])
   end
   
 
@@ -89,7 +90,7 @@ class UsersController < ApplicationController
   def user_params
     # params.require(:user).permit(:name, :email, :password, :password_confirmation)
     params.require(:user).permit(:name, :email, :area, :profile, :password,
-                              :password_confirmation, :profileimage)
+                                  :password_confirmation, :profileimage, :profileimage_cache)
   end
   
   

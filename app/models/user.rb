@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     validates :area, length: { maximum: 32 }, on: :update
 
     # carrierwave
-    mount_uploader :image, ImageUploader
+    mount_uploader :profileimage, ImageUploader
 
     # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
     has_many :microposts
