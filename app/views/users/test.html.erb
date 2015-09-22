@@ -1,5 +1,31 @@
 aaaaaaaaaa
 
+<%= current_user.microposts.find_by_retweetid(80).inspect %>
+
+<hr />
+
+<% unless current_user.microposts.find_by_retweetid(80) %>
+  retweetidがないよ
+
+<% end %>
+
+<hr />
+
+<%= Micropost.find_by_retweetid(99).inspect %>
+
+<hr />
+where<br />
+<%= Micropost.where(retweetid: 99).count %>
+
+<hr />
+
+
+where<br />
+<%= Micropost.where(retweetid: 7).count %>
+
+<hr />
+
+
 
 <% @user = User.find(params[:id]) %>
 <%= @user.microposts.inspect %>
@@ -7,6 +33,7 @@ aaaaaaaaaa
     <% if f.image? %>
         <p>画像あるよ</p>
         <%= image_tag f.image.url %><br />
+        lightboxモーダル<%= link_to image_tag(f.image.url, :size => "76x76"),f.image.url,:rel => "lightbox"%>
     <% else %>
         <p>画像ないよ</p>
     <% end %>
@@ -22,18 +49,42 @@ aaaaaaaaaa
 
 <hr />
 
-<%= Micropost.find_by_id(29).id.inspect %>
-<%= Micropost.find_by_id(29).created_at.inspect %>
-
-<%= Micropost.find_by_id(29).user_id.inspect %>
-
-<%= Micropost.find_by_id(29).content.inspect %>
-
-<%= Micropost.find_by_id(29).created_at.inspect %>
+<%= Micropost.all.inspect %>
 <hr />
-<%= Micropost.find_by_id(29).inspect %>
+<%= Micropost.find_by_id(70).inspect %>
+<%#= Micropost.find_by_id(75).created_at.inspect %>
 
+<%#= Micropost.find_by_id(75).user_id.inspect %>
+
+<%#= Micropost.find_by_id(75).content.inspect %>
+
+<%#= Micropost.find_by_id(75).created_at.inspect %>
+<hr />
+<%#= Micropost.find_by_id(75).inspect %>
+
+<hr />
+ゴミ箱
+<i class="fa fa-trash-o"></i>
+<hr />
+リツイートボタン
+<i class="fa fa-retweet"></i>
+<hr />
 
 <%= button_tag(type: "submit", class: "btn") do %>
 <i class="fa fa-retweet"></i>
   <% end %>
+
+<hr>
+<%= button_tag :type => "submit", :class =>"btn btn-default btn-s-md" do %>
+  <i class="fa fa-retweet"></i>
+<% end %>
+
+<hr>
+
+<%= button_tag :type => "submit", :class =>"btn btn-default btn-s-md" do %>
+  <i class="fa fa-trash-o"></i>
+<% end %>
+
+
+
+

@@ -43,6 +43,9 @@ gem 'carrierwave'
 
 gem 'mini_magick'
 
+# lightbox2
+gem 'lightbox2-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

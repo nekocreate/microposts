@@ -74,6 +74,11 @@ class UsersController < ApplicationController
     @users = User.order(":id").page(params[:page]).per(5)
   end
   
+  def alltweet
+    # kaminari の設定 1ページにいくつ表示させるかを.par()の引数に
+    @micropost = Micropost.order(created_at: :desc).page(params[:page]).per(100)
+  end
+  
   # userの動作検証用
   def test
   end
@@ -83,7 +88,8 @@ class UsersController < ApplicationController
   
   def user_params
     # params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    params.require(:user).permit(:name, :email, :area, :profile, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :area, :profile, :password,
+                              :password_confirmation, :profileimage)
   end
   
   

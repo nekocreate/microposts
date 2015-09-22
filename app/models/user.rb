@@ -8,7 +8,11 @@ class User < ActiveRecord::Base
     validates :profile, presence: true, length: { maximum: 255 }, on: :update
     validates :area, length: { maximum: 32 }, on: :update
 
-    has_many :microposts # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
+    # carrierwave
+    mount_uploader :image, ImageUploader
+
+    # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
+    has_many :microposts
     
     ### あるuserがフォローしている人の実装 ここから###
     # class_nameとしてRelationshipモデルを指定

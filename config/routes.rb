@@ -14,10 +14,13 @@ Rails.application.routes.draw do
       # get 'followings'
       # get 'follower'
       get 'test' # userのテスト用
+      #get 'alltweet'
     end
     
     collection do
+      #get 'alluserstweets'
       get 'test2'
+      get 'alltweet'
     end
   end
 

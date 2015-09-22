@@ -4,55 +4,48 @@ class MicropostsController < ApplicationController
     before_action :logged_in_user, only: [:create]
     
     def create
+        #render text: micropost_params
+        
         @micropost = current_user.microposts.build(micropost_params)
         if @micropost.save
             flash[:success] = "Micropost created!"
             redirect_to root_url
         else
+            @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
             render 'static_pages/home'
         end
     end
     
     def destroy
+        #### 親つぶやきを削除する前に、そのつぶやきをretweetしているつぶやきがあれば全て削除する ここから
+        @id = params[:id] # deleteしたときに送られたparamsの中のid(micropostのid)を@idに代入
+        if Micropost.find_by_retweetid(@id) #retweetidカラムに@idが存在したら
+            Micropost.destroy_all(retweetid: @id) # retweetid の値が @id と一致するレコードを全て削除
+        end
+        #### 親つぶやきを削除する前に、そのつぶやきをretweetしているつぶやきがあれば全て削除する ここまで
+        
         @micropost = current_user.microposts.find_by(id: params[:id])
         return redirect_to root_url if @micropost.nil?
         @micropost.destroy
         flash[:success] = "Micropost deleted"
         # request.refefferにリダイレクトするが、
         # リクエストの仕方によってreferrerに値が入ってにない場合はroot_urlにリダイレクトする
+        # 下のコメントアウトは後ほど取り除く。
         redirect_to request.referrer || root_url
     end
 
-
-def retweet
+    def retweet
+    	@micropost = current_user.microposts.build(micropost_params)
     
-    #micropost. = Micropost.find_by_id(params[:id]).attributes
-    #render text: params[:id]
-    #render text: @micropost.attributes
-
-	#retweetmicropost = Micropost.find_by_id(38).content
-	@micropost = current_user.microposts.build(micropost_params)
-	#@retweet = Micropost.find_by_id(id: params[:id])
-	#render text: @micropost.inspect
-	
-
-	#render text: @retweet.inspect
-	#@micropost = current_user.microposts.build(
-	#    user_id: @retweet.user_id,
-	 #   id: @retweet.id, content: @retweet.content,
-	 #   image: @retweet.image, created_at: @retweet.created_at, updated_at: @retweet.updated_at
-	 #   )
-	#render text: @micropost.inspect
-	if @micropost.save
-        flash[:success] = "Retweet成功"
-        redirect_to root_url
-
-	else
-
-		flash[:error] = "Retweet error!"
-	end
-end
-
+    	if @micropost.save
+            flash[:success] = "Retweet成功"
+            redirect_to root_url
+    	else
+    		flash[:error] = "Retweet失敗"
+            @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
+            render 'static_pages/home'
+    	end
+    end
 
 
 

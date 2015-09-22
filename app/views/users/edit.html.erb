@@ -20,6 +20,10 @@
             <%#= f.label :password %>
             <%#= f.password_field :password %>
 
+            <%= f.label :profileimage,"プロフィール画像をアップロードできます。"%>
+            <%= f.file_field :profileimage %><%# オプションに画像用に追加したカラム名を指定 %>
+            <%= f.hidden_field :image_cache %>
+
             <%= f.submit "Update Profile", class: "btn btn-large btn-primary" %>
         
         <% end %>

@@ -3,15 +3,37 @@
     <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
     <span class="content"><%= micropost.content %></span>
 
-<% if micropost.retweetid.present? %>
-
-<%#= Micropost.find_by_id(micropost.retweetid).image.url %><%# これで元つぶやきの画像のURLは取得できるが #>
-<%#= img_tag Micropost.find_by_id(micropost.retweetid).image.url %><%# img_tag を呼び出すとエラーになる %>
-<% end %>
-
     <% if micropost.image? %>
-        <div><%= image_tag micropost.image.thumb.url %></div>
+        <%#= image_tag micropost.image.thumb.url %><%# carrierwaveのサムネイルを表示させることもできる %>
+        <%= link_to image_tag(micropost.image.url, :width => "200"), micropost.image.url, :rel => "lightbox" %><%# lightbox2によるモーダル表示 %>
     <% end %>
+
+    <% if micropost.retweetid.present? %><%# reteetしたものはimageカラムが空っぽなので無理やり呼び出す %>
+        <%#= Micropost.find_by_id(micropost.retweetid).image %><%# これで元つぶやきの画像のURLは取得できる %>
+        <!--<img src="<%#= Micropost.find_by_id(micropost.retweetid).image %>">--><%# carrierwaveのメソッドは使えないので直接呼び出す %>
+        <% if Micropost.find_by_id(micropost.retweetid).image.present? %>
+            <%#= image_tag Micropost.find_by_id(micropost.retweetid).image.url %>  
+            <%= link_to image_tag(Micropost.find_by_id(micropost.retweetid).image.url,
+            :width => "200"), Micropost.find_by_id(micropost.retweetid).image.url, :rel => "lightbox"%>
+        <% end %>
+    <% end %>
+    
+
+    <% if micropost.retweetid.present? %>
+        <% if Micropost.where(retweetid: micropost.retweetid).count != 0 %>
+            <br /><span class="content retweetcount">
+                (<%= Micropost.where(retweetid: micropost.retweetid).count %>)人がリツィート
+            </span>
+        <% end %>
+    <% else %>
+        <% if Micropost.where(retweetid: micropost.id).count != 0 %>
+            <br /><span class="content retweetcount">
+                (<%= Micropost.where(retweetid: micropost.id).count %>)人がリツィート
+            </span>
+        <% end %>
+    <% end %>
+
+
     <span class="timestamp">
         Posted <%= time_ago_in_words(micropost.created_at) %> ago.
         <% if current_user == micropost.user %>
@@ -20,33 +42,16 @@
                                              data: { confirm: "You sure?" } %>
             <%# 上記は、以下と同じ意味。
             link_to "delete", micropost_path(micropost), method: :delete, data: { confirm: "You sure?" } 
-            routesの設定は、DELETE /microposts/:id(.:format)      microposts#destroy　だから。
+            routesの設定は、DELETE /microposts/:id(.:format)      microposts#destroy だから。
             実際のHTMLソースは以下のようになる。
             <a data-confirm="You sure?" rel="nofollow" data-method="delete" href="/microposts/1">delete</a>
             よって、コントローラにはdestroyメソッド(アクション)を追加する。
             %>
         <% end %>
     </span>
-
-    <% if current_user != micropost.user %><%# 自分のつぶやきはretweetボタンを表示させない %>
-        <%= form_for @micropost, :url => {:controller => 'microposts', :action => 'retweet' } do |f| %>
-            <%= f.hidden_field :retweetid, :value => micropost.id %>
-            <%= f.hidden_field :content, :value => micropost.content %>
-            <%#= f.hidden_field :image, :value => micropost.image %>
-            <%#= f.file_field :image, :value => micropost.image %><%# type="file"には強制的にimageを入れられない #>
-            <%#= micropost.image %>
-            <%# @image = Micropost.find_by_id(micropost.id).image %>
-            <%#= @image.inspect %>
-            <%#= f.hidden_field :image, :value => @image %>
-            <i class="fa fa-retweet"></i>
-            <%= f.submit "retweet" %>
-        <% end %>
-    <% end %>
-    <%#= micropost.inspect %>
-    <%#= micropost.retweetid %>
-    <%#= micropost.retweetid.present? %>
+    
     <% if micropost.retweetid.present? %><%# retweetidカラムに値があったら %>
-        <span class="content" style="background-color:#ffcaca;">
+        <span class="content retweetdetail">
         <%= link_to micropost.user.name,user_path(micropost.user) %><%# retweetした人 %>
         さんが
         <% @moto_tweet_id = Micropost.find_by_id(micropost.retweetid).user_id %><%# retweetされた人のuser_id %>
@@ -54,8 +59,19 @@
         <%= link_to @moto_user_name, user_path(@moto_tweet_id) %>
         さんのつぶやきをRetweetしました
         </span>
-
-    
     <% end %>
+
+
+    <% if current_user != micropost.user %><%# 自分のつぶやきはretweetボタンを表示させない %>
+        <% unless current_user.microposts.find_by_retweetid(micropost.id) %><%# 一度もretweetしていない場合のみretweetボタンを表示させる %>
+            <% @micropost = Micropost.new %>
+            <%= form_for @micropost, :url => {:controller => 'microposts', :action => 'retweet' } do |f| %>
+                <%= f.hidden_field :retweetid, :value => micropost.id %>
+                <%= f.hidden_field :content, :value => micropost.content %>
+                <i class="fa fa-retweet"></i>
+                <%= f.submit "retweet" %>
+            <% end %>
+        <% end %>
+    <% end %>
+
 </li>
-<i class="fa fa-trash"></i>
