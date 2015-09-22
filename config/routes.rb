@@ -15,7 +15,21 @@ Rails.application.routes.draw do
       # get 'follower'
       get 'test' # userのテスト用
     end
+    
+    collection do
+      get 'test2'
+    end
   end
+
+  resources :microposts do
+    collection do
+      post :retweet
+    end
+  end
+
+
+
+
   
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts

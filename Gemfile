@@ -37,6 +37,12 @@ gem 'kaminari'
 # carrierwave 画像アップローダ
 gem 'carrierwave'
 
+# carrierwave でリサイズなどをするために必要
+# gem 'rmagick'
+# gem 'rmagick', '2.15.4'
+
+gem 'mini_magick'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

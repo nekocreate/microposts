@@ -3,10 +3,12 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:edit, :update]
   
   def show
+    
     @user = User.find(params[:id])
     # @users = User.all だと全てのuserのものが入ってしまうのでだめ。
     
     @microposts = @user.microposts # ユーザーに紐付いたマイクロポストを代入
+    @micropost = Micropost.new
   end
   
   def new

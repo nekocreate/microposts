@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
     validates :password, length: { minimum: 6 }, on: :create
     validates :profile, presence: true, length: { maximum: 255 }, on: :update
     validates :area, length: { maximum: 32 }, on: :update
-    
-    paginates_per 5
 
     has_many :microposts # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
     
@@ -33,7 +31,7 @@ class User < ActiveRecord::Base
     # sourceパラメータで、follower_usersはfollowerのidの集合体であることを明示的に指定
     has_many :follower_users, through: :follower_relationships, source: :follower
     ### フォローされている人の実装 ここまで ###
-    
+
     # 他のユーザーをフォローする
     def follow(other_user)
         following_relationships.create(followed_id: other_user.id)

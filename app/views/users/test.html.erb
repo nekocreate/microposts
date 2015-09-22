@@ -1,57 +1,39 @@
-@user = User.find(params[:id])　は<br />
-ルートの設定で生成されるURL（現在表示しているURL）の中の「:id」をもとに<br />
-usersテーブルから一致するレコードを探しだし@userに代入している<br />
+aaaaaaaaaa
+
+
 <% @user = User.find(params[:id]) %>
-@userに入っているもの
-<p><%= @user.inspect %></p>
-<hr />
-
-ソートしたもの<br />
-<%#= @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc) %>
-<%#= @feed_items.inspect %>
-
-<br />
-
-ソートしてないもの<br />
-<%#= @feed_items = current_user.feed_items.includes(:user) %>
-<%#= @feed_items.inspect %>
-
-<hr />
-<%= @feed_items = current_user.feed_items %>
-<%= @feed_items.inspect %>
-
-<hr />
-<%#= render 'shared/feed' %>
-
-<%= render @feed_items %>
-
-<hr />
-
-
-<hr />
-<%# @user = User.find(params[:id]) %>
-<%#= render partial: 'user', locals: { name: @user.name } %>
-
-<% @users = User.all %>
-<%= render partial: 'shared/alluser', collection: @users, as: 'localuser' %>
-
-
-
-<%#= render @users %>
-
-<hr />
-
-<%= render @user.microposts %>
-
-<hr />
-<hr />
-<hr />
-<% @feed_items.each do |micropost| %>
-	<%= render partial: 'microposts/micropost', locals: { micropost: micropost } %>
+<%= @user.microposts.inspect %>
+<% @user.microposts.each do |f| %>
+    <% if f.image? %>
+        <p>画像あるよ</p>
+        <%= image_tag f.image.url %><br />
+    <% else %>
+        <p>画像ないよ</p>
+    <% end %>
 <% end %>
 
 <hr />
-<hr />
+
 <%= @user.microposts.inspect %>
+
 <hr />
 
+<%= @user.microposts.first %>
+
+<hr />
+
+<%= Micropost.find_by_id(29).id.inspect %>
+<%= Micropost.find_by_id(29).created_at.inspect %>
+
+<%= Micropost.find_by_id(29).user_id.inspect %>
+
+<%= Micropost.find_by_id(29).content.inspect %>
+
+<%= Micropost.find_by_id(29).created_at.inspect %>
+<hr />
+<%= Micropost.find_by_id(29).inspect %>
+
+
+<%= button_tag(type: "submit", class: "btn") do %>
+<i class="fa fa-retweet"></i>
+  <% end %>
