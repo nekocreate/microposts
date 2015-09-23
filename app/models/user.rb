@@ -35,6 +35,30 @@ class User < ActiveRecord::Base
     # sourceパラメータで、follower_usersはfollowerのidの集合体であることを明示的に指定
     has_many :follower_users, through: :follower_relationships, source: :follower
     ### フォローされている人の実装 ここまで ###
+    
+    ### つぶやきをふぁぼするリレーション関係の実装 ここから
+    has_many :favoing_relationfabotweets, class_name: "relationfavotweets",
+                                         foreign_key: "favoer_id",
+                                         dependent:  :destroy
+    
+    has_many :favoing_microposts, through: :favoing_relationfabotweets, source: :tweet
+    ### つぶやきをふぁぼするリレーション関係の実装 ここから    
+    
+    # つぶやきをふぁぼる
+    def favo(other_micropost)
+        favoing_relationfavotweets.create(tweet_id: other_micropost.id)
+    end
+    
+    # つぶやきをあんふぁぼする
+    def unfavo(other_micropost)
+        favoing_relationfavotweets.find_by(tweet_id: other_micropost.id).destroy
+    end
+    
+    # あるつぶやきをふぁぼしているかどうか？
+    def favoing?(other_micropost)
+        favoing_microposts.include?(other_micropost)
+    end
+
 
     # 他のユーザーをフォローする
     def follow(other_user)
