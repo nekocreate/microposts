@@ -1,21 +1,32 @@
 <div class="one_user panel panel-default">
     <div class="panel-body">
 
-    <% if localuser.profileimage? %>
-        <%= link_to (image_tag localuser.profileimage, size: '50x50'), user_path(localuser.id) %>
-    <% else %>
-        <%= link_to gravatar_for(localuser, size: 50), user_path(localuser.id) %>
-    <% end %>
-
-
+        <% if localuser.profileimage? %>
+            <%= link_to (image_tag localuser.profileimage, size: '50x50'), user_path(localuser.id) %>
+        <% else %>
+            <%= link_to gravatar_for(localuser, size: 50), user_path(localuser.id) %>
+        <% end %>
 
         <%#= link_to (gravatarmini_for localuser), user_path(localuser.id) %>
         <div class="fwl-username text-center">
             <%= link_to localuser.name, user_path(localuser.id) %>
         </div>
     </div>
+
     <ul class="list-group">
         <li class="list-group-item">住まい：<%= localuser.area %></li>
         <li class="list-group-item">プロフィール：<%= localuser.profile %></li>
+        <li class="list-group-item">
+            <% @user = localuser %>
+            <% if current_user != @user %><%# current_userと表示しているページのuserが違う場合 つまり他userのページを表示している場合%>
+                <div id="follow_form_<%= @user.id %>">
+                <% if current_user.following?(@user) %><%# フォローしている場合 %>
+                    <%= render 'unfollow' %><%# _unfollow.html.erbをrender %>
+                <% else %>
+                    <%= render 'follow' %><%# そうでなければ_follow.html.erbをrender %>
+                <% end %>
+                </div>
+            <% end %>
+        </li>
     </ul>
 </div>
