@@ -11,6 +11,9 @@
             asを指定しなければpartialテンプレート名がlocal変数となるけど。。慣れないうちはわかりにくいから。
         %>
     </ol>
+    <div class='after'></div><!-- clear: both -->
     <%# kaminariによるページネーション表示 %>
-    <%= paginate @microposts %>
+    <div id="pagination">
+        <%= paginate @microposts %>
+    </div>
 </div>

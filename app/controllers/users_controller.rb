@@ -90,7 +90,7 @@ class UsersController < ApplicationController
   
   # userの動作検証用
   def test
-    @user= User.find(params[:id])
+    @user= User.micropost.find(params[:id])
   end
 
 

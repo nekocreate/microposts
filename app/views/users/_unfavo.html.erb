@@ -1,7 +1,6 @@
 <%= form_for(current_user.favoing_relationfavotweets.find_by(tweet_id: @micropost.id),
     html: { method: :delete },
     remote: true) do |f| %>
-    <%#= f.submit "あんふぁぼ", class: "btn" %>
     <%= button_tag( class: "btn btn-warning btn-xs") do %>
         <%= content_tag :span, "あんふぁぼ", class: "glyphicon glyphicon-star-empty" %>
     <% end %>

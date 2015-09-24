@@ -4,6 +4,8 @@
 /* universal */
 
 body {
+  background-image: url(http://nyamu.sakura.ne.jp/img/micropost_back2.png);
+  background-size: cover;
   padding-top: 60px;
 }
 
@@ -201,6 +203,9 @@ span.picture {
 
 
 /* kaminari */
+#pagination {
+  text-align: center;
+}
 .pagination a, .pagination span.current, .pagination span.gap {
     float: left;
     padding: 0 14px;
@@ -257,7 +262,7 @@ span.picture {
 
 /* retweet*/
 .retweetcount {
-	background-color: limegreen;
+	background-color: lightgreen;
 	display:inline !important;
 }
 
@@ -316,4 +321,33 @@ span.picture {
 }
 .after{
  clear:both;
+}
+
+
+img.micropost_image {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+
+/* 各micropost  */
+/*
+.micropost_panel {
+ float: left;
+ margin-right: 3px;
+ width: 300px;
+ height: 500px;
+}
+*/
+
+/* 投稿削除リンク色を白にしたい  */
+/*
+a.white:link,a.white:visited{
+　color: white !important;
+}
+*/
+
+.white,.white:hover,.hd:visited{
+	color:#fff !important;
+	text-decoration:none !important;
 }

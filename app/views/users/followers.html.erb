@@ -2,21 +2,28 @@
    <aside class="col-md-4">
        <section class="user_info">
             <h1>
-                <%#= gravatar_for @user %><%# gravatarで生成されるimgタグにリンクを貼った %>
-                <%= link_to (gravatar_for @user), user_path(@user.id) %>
+            <% if @user.profileimage? %>
+                <%= link_to (image_tag @user.profileimage, size: '50x50'), user_path(@user.id) %>
+            <% else %>
+                <%= link_to gravatar_for(@user, size: 50), user_path(@user.id) %>
+            <% end %>
                 <%= @user.name %>
             </h1>
             <%#= @user.inspect %><%# 確認のためこのコードはもう暫く残しておきたい。 %>
        </section>
    </aside>
 
-    <h2 class="h4"><%= @user.name %>をフォローしている人</h2>
+    <h2 class="h4"><%= @user.name %>さんををフォローしている人</h2>
     <div class="col-md-8">
         <% @user.follower_relationships.each do |f| %>
         <% @followeruser = User.find(f.follower_id) %>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <%= link_to (gravatarmini_for @followeruser), user_path(@followeruser.id) %>
+                    <% if @followeruser.profileimage? %>
+                        <%= link_to (image_tag @followeruser.profileimage, size: '50x50'), user_path(@followeruser.id) %>
+                    <% else %>
+                        <%= link_to gravatar_for(@followeruser, size: 50), user_path(@followeruser.id) %>
+                    <% end %>
                     <div class="fwl-username text-center">
                         <%= link_to @followeruser.name, user_path(@followeruser.id) %>
                     </div>

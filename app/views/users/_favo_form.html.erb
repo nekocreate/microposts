@@ -4,11 +4,9 @@
         <%# if current_user != @micropost.user %>
         <%# if current_user.favoing?(microposts) %><%# ふぁぼしていたらtrueを返す %>
         <% if current_user.favoing?(@micropost) %><%# ふぁぼしていたらtrueを返す %>
-            <%#= render partial: 'unfavo', locals: { micropost: micropost } %>
-            <%= render 'unfavo' %>
+            <%= render 'users/unfavo' %>
         <% else %><%# ふぁぼしていなかったら「ふぁぼform」を表示させる %> 
-            <%#= render partial: 'favo', locals: { micropost: micropost } %>
-            <%= render 'favo' %>
+            <%= render 'users/favo' %>
         <% end %>
         <%# end %>
     </div>

@@ -20,7 +20,7 @@
                         </td>
                         <td>
                             <div class="text-center"><%= link_to "お気に入り", favorite_user_path(current_user) %><br />
-                            <%= current_user.favoing_relationfavotweets.length %></div>
+                            <%= current_user.favoing_relationfavotweets.count %></div>
                         </td>
                     </tr>
                 </table>
@@ -32,6 +32,11 @@
         <div class="col-md-8">
             <h3>つぶやきのFeed</h3>
             <%= render 'shared/feed' %>
+        </div>
+        <div class='after'></div><!-- clear: both -->
+        <%# kaminariによるページネーション表示 %>
+        <div id="pagination">
+            <%= paginate @feed_items %>
         </div>
     </div>
 <% else %>

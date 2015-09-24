@@ -28,6 +28,7 @@ class MicropostsController < ApplicationController
         return redirect_to root_url if @micropost.nil?
         @micropost.destroy
         flash[:success] = "投稿を削除しました"
+        
         # request.refefferにリダイレクトするが、
         # リクエストの仕方によってreferrerに値が入ってにない場合はroot_urlにリダイレクトする
         # 下のコメントアウトは後ほど取り除く。

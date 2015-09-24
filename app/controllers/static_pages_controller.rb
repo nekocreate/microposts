@@ -9,7 +9,7 @@ class StaticPagesController < ApplicationController
         # current_userのhas_many :micropostsで生成されるbuildメソッドを使用することで
         # user_idが紐付いたデータを生成できるcurrent_user.microposts.buildを使用すること！
       
-      @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
+      @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc).page(params[:page]).per(5)
         # order(created_at: :desc) とは、取得した値をcreated_at(投稿日)で並び替える処理
     end
   end

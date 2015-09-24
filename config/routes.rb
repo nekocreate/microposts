@@ -10,18 +10,12 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
-      get :followings, :followers # このようにカンマ区切りでリファクタリングできる
-      # get 'followings'
-      # get 'follower'
-      get 'tweet'
-      get 'favorite'
+      get :followings, :followers, :tweet, :favorite # このようにカンマ区切りでリファクタリングできる
       get 'test' # userのテスト用
       #get 'alltweet'
     end
     
     collection do
-      #get 'alluserstweets'
-      get 'test2'
       get 'alltweet'
     end
   end
