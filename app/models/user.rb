@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
     has_many :follower_relationships, class_name: "Relationship",
                                       foreign_key: "followed_id",
                                       dependent:   :destroy
+
     # has_many～throughを使い、follower_usersはfollower_relationships経由でデータを取得する
     # sourceパラメータで、follower_usersはfollowerのidの集合体であることを明示的に指定
     has_many :follower_users, through: :follower_relationships, source: :follower
