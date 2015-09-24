@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
+    @micropost = Micropost.new
+    @microposts = @user.microposts
   end
   
   def create
@@ -47,6 +49,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # フォローしている
   def followings
     begin
       # Userのパラメータ名が:idのものを見つけて@userにいれる。
@@ -58,6 +61,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # フォローされている
   def followers
     begin
       # Userのパラメータ名が:idのものを見つけて@userにいれる。
@@ -69,21 +73,38 @@ class UsersController < ApplicationController
     end
   end
 
+  # 登録ユーザー一覧のページ
   def index
     # kaminari の設定 1ページにいくつ表示させるかを.par()の引数に
-    @users = User.order(":id").page(params[:page]).per(5)
+    #@users = User.order(":id").page(params[:page]).per(30)
+    @users = User.order(created_at: :desc).page(params[:page]).per(10)
   end
   
+  # 全てのつぶやき
   def alltweet
     # kaminari の設定 1ページにいくつ表示させるかを.par()の引数に
-    @micropost = Micropost.order(created_at: :desc).page(params[:page]).per(100)
+    # なぜかインスタンス変数が単数形だとkaminariでエラーになった
+    # @micropost = Micropost.order(created_at: :desc).page(params[:page]).per(10)
+    @microposts = Micropost.order(created_at: :desc).page(params[:page]).per(10)
   end
   
   # userの動作検証用
   def test
     @user= User.find(params[:id])
   end
+
+
+  def tweet
+      @micropost = Micropost.find(params[:id])
+      #@micropost = current_user.microposts.build if logged_in?
+  end
   
+  # お気に入り
+  def favorite
+    @user = User.find(params[:id]) # お気に入り一覧を表示するページ(user)のidをインスタンス@userとして渡す！
+    @favo_items = @user.favo_items.includes(:user).order(created_at: :desc).page(params[:page]).per(1)
+  end
+
 
   private
   

@@ -1,13 +1,9 @@
-
-
-
 <div class="row">
-    <h1>全員のつぶやき</h1>
-
+    <h1 class="h3">全員のつぶやき</h1>
     <ol class='microposts'>
         <%#= render partial: 'alluser', collection: @users, as: 'localuser' %>
         <%#= render partial: 'microposts/allmicropost', collection: Micropost.all.order(created_at: :desc), as: 'micropost' %>
-        <%= render partial: 'microposts/micropost', collection: @micropost, as: 'micropost' %>
+        <%= render partial: 'microposts/micropost', collection: @microposts, as: 'micropost' %>
         <%# 部分テンプレートが、renderされるとき、@usersの要素の数だけループされる
             部分テンプレートはalluser
             コレクションとして@usersを指定
@@ -15,8 +11,6 @@
             asを指定しなければpartialテンプレート名がlocal変数となるけど。。慣れないうちはわかりにくいから。
         %>
     </ol>
-
-</div>
-
     <%# kaminariによるページネーション表示 %>
-    <%#= paginate @micropost %>
+    <%= paginate @microposts %>
+</div>

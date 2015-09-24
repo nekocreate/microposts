@@ -1,4 +1,6 @@
 <li id="micropost-<%= micropost.id %>">
+    <%#= link_to "つぶやきページ", tweet_micropost_path(micropost.id) %><br />
+    <%= link_to "つぶやきページ", tweet_user_path(micropost.id) %><br />
     <% if micropost.user.profileimage? %>
         <%= link_to (image_tag micropost.user.profileimage, size: '50x50'), micropost.user %>
     <% else %>
@@ -14,17 +16,17 @@
         </span>
     <% end %>
 
-    <% if micropost.retweetid.present? %><%# reteetしたものはimageカラムが空っぽなので無理やり呼び出す %>
+    <%# if micropost.retweetid.present? %><%# reteetしたものはimageカラムが空っぽなので無理やり呼び出す %>
         <%#= Micropost.find_by_id(micropost.retweetid).image %><%# これで元つぶやきの画像のURLは取得できる %>
         <!--<img src="<%#= Micropost.find_by_id(micropost.retweetid).image %>">--><%# carrierwaveのメソッドは使えないので直接呼び出す %>
-        <% if Micropost.find_by_id(micropost.retweetid).image.present? %>
-            <span class="content">
-                <%#= image_tag Micropost.find_by_id(micropost.retweetid).image.url %>  
-                <%= link_to image_tag(Micropost.find_by_id(micropost.retweetid).image.url,
+        <%# if Micropost.find_by_id(micropost.retweetid).image.present? %>
+            <!--<span class="content">-->
+                <%######= image_tag Micropost.find_by_id(micropost.retweetid).image.url %>  
+                <%#= link_to image_tag(Micropost.find_by_id(micropost.retweetid).image.url,
                 :width => "200"), Micropost.find_by_id(micropost.retweetid).image.url, :rel => "lightbox"%>
-            </span>
-        <% end %>
-    <% end %>
+            <!--</span>-->
+        <%# end %>
+    <%# end %>
     
 
 
@@ -62,23 +64,24 @@
             %>
 
 
-            <% if current_user != micropost.user %><%# 自分のつぶやきはretweetボタンを表示させない %>
-                <% unless current_user.microposts.find_by_retweetid(micropost.id) %><%# 一度もretweetしていない場合のみretweetボタンを表示させる %>
-                    <% @micropost = Micropost.new %>
-                    <%= form_for @micropost, :url => {:controller => 'microposts', :action => 'retweet' } do |f| %>
-                        <%= f.hidden_field :retweetid, :value => micropost.id %>
-                        <%= f.hidden_field :content, :value => micropost.content %>
+            <%# if current_user != micropost.user %><%# 自分のつぶやきはretweetボタンを表示させない %>
+                <%# unless current_user.microposts.find_by_retweetid(micropost.id) %><%# 一度もretweetしていない場合のみretweetボタンを表示させる %>
+                    <%# @micropost = Micropost.new %>
+                    <%#= form_for @micropost, :url => {:controller => 'microposts', :action => 'retweet' } do |f| %>
+                        <%#= f.hidden_field :retweetid, :value => micropost.id %>
+                        <%#= f.hidden_field :content, :value => micropost.content %>
                         <!--<i class="fa fa-retweet"></i>-->
                         <%#= f.submit "retweet" %>
-                        <%= button_tag do %>
-                          <%= content_tag :span, "", class: "glyphicon glyphicon-retweet" %>
-                        <% end %>
-                    <% end %>
-                <% end %>
-            <% end %>
+                        <%#= button_tag do %>
+                          <%#= content_tag :span, "", class: "glyphicon glyphicon-retweet" %>
+                        <%# end %>
+                    <%# end %>
+                <%# end %>
+            <%# end %>
         <% end %>
     </span>
     
+    <% @moto_user_name = '' %><%# 後ほどこの変数を使うので''を指定 %>
     <% if micropost.retweetid.present? %><%# retweetidカラムに値があったら %>
         <span class="content retweetdetail">
         <%= link_to micropost.user.name,user_path(micropost.user) %><%# retweetした人 %>
@@ -90,13 +93,17 @@
         </span>
     <% end %>
 
-
-    <% if current_user != micropost.user %><%# 自分のつぶやきはretweetボタンを表示させない %>
+    <%# 自分のつぶやきじゃない場合かつ、retweet元のつぶやきが自分のも以外の場合のみ、retweetボタンを表示させる。 %>
+    <% if current_user != micropost.user && current_user.name != @moto_user_name %>
         <% unless current_user.microposts.find_by_retweetid(micropost.id) %><%# 一度もretweetしていない場合のみretweetボタンを表示させる %>
             <% @micropost = Micropost.new %>
             <span class="content">
                 <%= form_for @micropost, :url => {:controller => 'microposts', :action => 'retweet' } do |f| %>
-                    <%= f.hidden_field :retweetid, :value => micropost.id %>
+                    <% if micropost.retweetid.present? %><%# retweetidカラムに値があったら %>
+                        <%= f.hidden_field :retweetid, :value => micropost.retweetid %><%# 既存のretweetidを使う %>
+                    <% else %>
+                        <%= f.hidden_field :retweetid, :value => micropost.id %><%# そうでない場合は、親つぶやきのidをretweetidとする %>
+                    <% end %>
                     <%= f.hidden_field :content, :value => micropost.content %>
                     <!--<i class="fa fa-retweet"></i>-->
                     <%#= f.submit "retweet" %>
@@ -109,3 +116,12 @@
     <% end %>
 
 </li>
+
+<i class="glyphicon glyphicon-star-empty favored"></i>
+
+<i class="glyphicon glyphicon-star-empty favblack"></i>
+
+
+    <div class="boxContainer">
+        <%#= render 'users/favo_form',locals: { micropost: micropost } %>
+    </div>

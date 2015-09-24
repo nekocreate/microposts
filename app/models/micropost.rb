@@ -13,4 +13,12 @@ class Micropost < ActiveRecord::Base
   
   # carrierwave
   mount_uploader :image, ImageUploader
+
+    ### つぶやきをふぁぼられるリレーション関係の実装 ここから
+    #has_many :favoing_microposts, class_name: "Relationfavotweet", foreign_key: "tweet_id", dependent:  :destroy
+    
+    #has_many :favoing_relationfavotweets, through: :favoing_microposts, source: :favoer
+    ### つぶやきをふぁぼられるリレーション関係の実装 ここから    
+
+
 end

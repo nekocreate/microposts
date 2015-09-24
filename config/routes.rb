@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       get :followings, :followers # このようにカンマ区切りでリファクタリングできる
       # get 'followings'
       # get 'follower'
+      get 'tweet'
+      get 'favorite'
       get 'test' # userのテスト用
       #get 'alltweet'
     end
@@ -25,6 +27,9 @@ Rails.application.routes.draw do
   end
 
   resources :microposts do
+    member do
+      #get :tweet
+    end
     collection do
       post :retweet
     end

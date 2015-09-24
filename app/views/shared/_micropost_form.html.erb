@@ -1,7 +1,7 @@
 <%= form_for(@micropost) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <div class="field">
-        <%= f.text_area :content, placeholder: "つぶやきを入力してください。" %>
+        <%= f.text_area :content, placeholder: "つぶやきを入力は必須です。" %>
         <%= f.label :image ,"画像をアップロードできます。"%>
         <%= f.file_field :image %><%# オプションに画像用に追加したカラム名を指定 %>
         <%= f.hidden_field :image_cache %>

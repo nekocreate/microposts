@@ -1,4 +1,34 @@
 
+
+<%= @user = User.find_by(params[:id]) %>
+<hr />
+
+<%= Micropost.last.id %>
+
+<hr />
+
+test:
+<% if record = Micropost.where(retweetid: 101).first.blank? %>
+  レコードが見つからないよ
+<% else %>
+  <%= record.inspect %>レコードがあったよ
+<% end %>
+
+<%# record = Micropost.where(id: 103).first %><%# imageのあるレコード %>
+<%# image = record.image %><%# imageの値を取得 %>
+
+<%# record = Micropost.where(id: 118).first %><%# imageを入れたい対象のレコード %>
+<%# record.image = image %>
+<%# record.save! %>
+
+強制的に入れた画像<br />
+<%= image_tag Micropost.find_by(id: 118).image %>
+
+
+<hr />
+
+
+
 <button type="submit" class="btn btn-primary">
   <i class="fa fa-retweet"></i>
 </button>

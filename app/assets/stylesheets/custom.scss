@@ -53,13 +53,14 @@ p {
 /* header */
 
 #logo {
-  /*float: left;*/ /* 2015年9月19日削除 */
+  float: left; /* 2015年9月19日削除 */
+  margin-left: 10px;
   margin-right: 10px;
   font-size: 1.7em;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: -1px;
-  padding-top: 9px;
+  padding-top: 9px ;
   font-weight: bold;
 }
 
@@ -240,29 +241,25 @@ span.picture {
 }
 
 
-
-
-
 /* 追加 2015年9月19日 */
-.row {
-  padding-top:150px;
-}
+/*.row {
+  padding-top: 150px;
+}*/
 
-@media screen and (min-width : 768px){
+/*@media screen and (min-width : 768px){
  #logo {
   float: left;
  }
  .row {
   padding: 0;
  }
-}
+}*/
 
-
+/* retweet*/
 .retweetcount {
 	background-color: limegreen;
 	display:inline !important;
 }
-
 
 .retweetdetail {
 	background-color: lightpink;
@@ -270,4 +267,53 @@ span.picture {
 }
 
 
+/* box 横並びここから */
+.box {
+	float: left;
+	margin-right: 5px;
+}
 
+.boxContainer {
+	overflow: hidden;
+}
+
+/* clearfix */
+.boxContainer:before,
+.boxContainer:after {
+    content: "";
+    display: table;
+}
+ 
+.boxContainer:after {
+    clear: both;
+}
+ 
+/* For IE 6/7 (trigger hasLayout) */
+.boxContainer {
+    zoom: 1;
+}
+
+
+
+/* indexページの各ユーザーの名前 */
+.fwl-username {
+  font-size: 20px;
+  margin: auto auto;
+}
+
+
+/* indexページの各ユーザーを横並び*/
+.all_user {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.one_user {
+ float: left;
+ margin-right: 3px;
+ width: 300px;
+ height: 300px;
+}
+.after{
+ clear:both;
+}

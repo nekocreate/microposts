@@ -37,13 +37,14 @@ class User < ActiveRecord::Base
     ### フォローされている人の実装 ここまで ###
     
     ### つぶやきをふぁぼするリレーション関係の実装 ここから
-    has_many :favoing_relationfabotweets, class_name: "relationfavotweets",
+    has_many :favoing_relationfavotweets, class_name: "Relationfavotweet",
                                          foreign_key: "favoer_id",
                                          dependent:  :destroy
     
-    has_many :favoing_microposts, through: :favoing_relationfabotweets, source: :tweet
+    has_many :favoing_microposts, through: :favoing_relationfavotweets, source: :tweet
     ### つぶやきをふぁぼするリレーション関係の実装 ここから    
-    
+
+
     # つぶやきをふぁぼる
     def favo(other_micropost)
         favoing_relationfavotweets.create(tweet_id: other_micropost.id)
@@ -75,9 +76,17 @@ class User < ActiveRecord::Base
         following_users.include?(other_user)
     end
     
-    # user_idがフォローしているユーザーと自分のつぶやきを取得して配列で返す。
+    # feed_itemsの場合は、Micropostの「user_idと一致するもの」を探して、配列同士を+で要素を足し合わせる。
+    # user_idがフォローしているユーザーのつぶやきを取得して配列で返す。
     # 配列同士を +で要素を足し合わせてる。
     def feed_items
         Micropost.where(user_id: following_user_ids + [self.id])
     end
+
+    # favo_itemsの場合は、Micropostの「idと一致するもの」を探して、配列同士を+で要素を足し合わせる。
+    def favo_items
+        #@user = User.find_by_id([:id])
+        Micropost.where(id: favoing_micropost_ids + [self.id])
+    end
+
 end

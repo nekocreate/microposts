@@ -1,0 +1,7 @@
+<%= form_for(current_user.favoing_relationfavotweets.build, remote: true) do |f| %>
+    <%= hidden_field_tag :tweet_id, @micropost.id %>
+    <%#= f.submit "ふぁぼ", class: "btn btn-primary btn-xs" %>
+    <%= button_tag( class: "btn btn-success btn-xs") do %>
+        <%= content_tag :span, "ふぁぼ", class: "glyphicon glyphicon-star-empty" %>
+    <% end %>
+<% end %>

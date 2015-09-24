@@ -23,6 +23,10 @@
                         <div class="text-center"><%= link_to "フォロワー", followers_user_path(@user.id) %><br />
                         <%= @user.follower_relationships.length %></div>
                     </td>
+                    <td>
+                        <div class="text-center"><%= link_to "お気に入り", favorite_user_path(@user.id) %><br />
+                        <%= @user.favoing_relationfavotweets.length %></div>
+                    </td>
                 </tr>
             </table>
         </section>

@@ -1,0 +1,15 @@
+<div class="box" id="favo_form_<%= @micropost.id %>">
+    <div class="form-horizontal" role="form">
+        <%# current_user以外のつぶやきのみ「ふぁぼ・あんふぁぼformを表示する %>
+        <%# if current_user != @micropost.user %>
+        <%# if current_user.favoing?(microposts) %><%# ふぁぼしていたらtrueを返す %>
+        <% if current_user.favoing?(@micropost) %><%# ふぁぼしていたらtrueを返す %>
+            <%#= render partial: 'unfavo', locals: { micropost: micropost } %>
+            <%= render 'unfavo' %>
+        <% else %><%# ふぁぼしていなかったら「ふぁぼform」を表示させる %> 
+            <%#= render partial: 'favo', locals: { micropost: micropost } %>
+            <%= render 'favo' %>
+        <% end %>
+        <%# end %>
+    </div>
+</div>

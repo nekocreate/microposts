@@ -1,0 +1,9 @@
+<% if @favo_items.any? %>
+    <ol class='microposts'>
+        <%= render @favo_items %>
+        <%# 上記は以下と同じ処理をしている %>
+        <%# @feed_items.each do |micropost| %>
+        	<%#= render partial: 'microposts/micropost', locals: { micropost: micropost } %>
+        <%# end %>
+    </ol>
+<% end %>

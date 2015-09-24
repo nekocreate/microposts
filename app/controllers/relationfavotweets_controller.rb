@@ -2,13 +2,19 @@ class RelationfavotweetsController < ApplicationController
     
     # ふぁぼ
     def create
-        @micropost = micropost.find(params[:tweet_id])
+        #render text: params
+        @micropost = Micropost.find(params[:tweet_id])
         current_user.favo(@micropost)
+        #flash[:success] = "つぶやきをふぁぼしました"
+        #redirect_to request.referrer || root_url
     end
     
     # あんふぁぼ
     def destroy
-        @micropost = current_user.relationfavotweets.find(params[:id]).tweet
+        #render text: params
+        @micropost = current_user.favoing_relationfavotweets.find(params[:id]).tweet
         current_user.unfavo(@micropost)
+        #flash[:success] = "あんふぁぼしました"
+        #redirect_to request.referrer || root_url
     end
 end
