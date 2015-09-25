@@ -1,22 +1,11 @@
 <div class="row">
    <aside class="col-md-4">
-       <section class="user_info">
-            <h1>
-            <% if @user.profileimage? %>
-                <%= link_to (image_tag @user.profileimage, size: '50x50'), user_path(@user.id) %>
-            <% else %>
-                <%= link_to gravatar_for(@user, size: 50), user_path(@user.id) %>
-            <% end %>
-                <%= @user.name %>
-            </h1>
-            <%#= @user.inspect %><%# 確認のためこのコードはもう暫く残しておきたい。 %>
-       </section>
+        <%= render 'shared/user_info' %>
    </aside>
-
-    <h2 class="h4"><%= @user.name %>さんををフォローしている人</h2>
+    <h1 class="h4"><%= @user.name %>さんををフォローしている人</h1>
     <div class="col-md-8">
         <% @user.follower_relationships.each do |f| %>
-        <% @followeruser = User.find(f.follower_id) %>
+            <% @followeruser = User.find(f.follower_id) %>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <% if @followeruser.profileimage? %>

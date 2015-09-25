@@ -4,6 +4,7 @@ class StaticPagesController < ApplicationController
 
   def home
     if logged_in?
+      @user = current_user
       @micropost = current_user.microposts.build
         # @micropost = Micropost.new(user_id: current_user.id) と同じだが、
         # current_userのhas_many :micropostsで生成されるbuildメソッドを使用することで

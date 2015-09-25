@@ -1,10 +1,11 @@
 <div class="row">
-    <div class="col-md-12">
-        <h1 class="h3">お気に入りのつぶやき</h1>
+    <h1 class="h3"><%= @user.name %>さんのお気に入り</h1>
+    <aside class="col-md-4">
+        <%= render 'shared/user_info' %>
+    </aside>
+    <div class="col-md-8">
         <%= render 'shared/favorite' %>
     </div>
-    <div class='after'></div><!-- clear: both -->
-    <%# kaminariによるページネーション表示 %>
     <div id="pagination">
         <%= paginate @favo_items %>
     </div>

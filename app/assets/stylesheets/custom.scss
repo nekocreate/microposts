@@ -47,6 +47,19 @@ h2 {
   color: #777;
 }
 
+
+h1.h3 {
+  letter-spacing: 0.15em;
+  color: #666;
+  text-shadow: 1px 1px 0px #000;
+}
+
+h1.h4 {
+  letter-spacing: 0.15em;
+  color: #666;
+  text-shadow: 1px 1px 0px #000;
+}
+
 p {
   font-size: 1.1em;
   line-height: 1.7em;
@@ -118,13 +131,16 @@ input {
 aside {
   section.user_info {
     margin-top: 20px;
+    background-color: #ffffff;
+    padding: 10px 10px 0px 10px;
+    border-radius: 5px;
   }
   section {
     padding: 10px 0;
     margin-top: 20px;
     &:first-child {
       border: 0;
-      padding-top: 0;
+      /*padding-top: 0;*/
     }
     span {
       display: block;
@@ -351,3 +367,4 @@ a.white:link,a.white:visited{
 	color:#fff !important;
 	text-decoration:none !important;
 }
+

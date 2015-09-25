@@ -1,4 +1,36 @@
-<%= link_to gravatar_for(current_user, size: 50),current_user %>
-<h1><%= current_user.name %></h1>
-<span><%= link_to "プロフィールページ", current_user %></span>
-<span><%= pluralize(current_user.microposts.count, "つぶやき") %></span> <%# micropostの数つまり投稿数？ %>
+<section class="user_info">
+    <div class="user_profile">
+    <h1>
+        <% if @user.profileimage? %>
+            <%= link_to (image_tag @user.profileimage, size: '50x50'), user_path(@user.id) %>
+        <% else %>
+            <%= link_to gravatar_for(@user, size: 50), user_path(@user.id) %>
+        <% end %>
+        <%= @user.name %>
+    </h1>
+    <div>住まい：<%= @user.area %></div>
+    <div>プロフィール：<%= @user.profile %></div>
+    <%#= localuser.inspect %><%# 確認のためこのコードはもう暫く残しておきたい。 %>
+    </div>
+
+    <table class="table" border="0">
+        <tr>
+            <td>
+                <div class="text-center">ツイート<br /><%= @user.microposts.count %></div>
+            </td>
+            <td>
+                <div class="text-center"><%= link_to "フォロー", followings_user_path(@user.id) %><br />
+                <%= @user.following_relationships.length %></div>
+            </td>
+            <td>
+                <div class="text-center"><%= link_to "フォロワー", followers_user_path(@user.id) %><br />
+                <%= @user.follower_relationships.length %></div>
+            </td>
+            <td>
+                <div class="text-center"><%= link_to "お気に入り", favorite_user_path(@user.id) %><br />
+                <%= @user.favoing_relationfavotweets.length %></div>
+            </td>
+        </tr>
+    </table>
+</section>
+

@@ -1,18 +1,9 @@
 <div class="row">
    <aside class="col-md-4">
-       <section class="user_info">
-            <h1>
-                <% if @user.profileimage? %>
-                    <%= link_to (image_tag @user.profileimage, size: '50x50'), user_path(@user.id) %>
-                <% else %>
-                    <%= link_to gravatar_for(@user, size: 50), user_path(@user.id) %>
-                <% end %>
-                <%= @user.name %>
-            </h1>
-       </section>
+        <%= render 'shared/user_info' %>
    </aside>
 
-    <h2 class="h4"><%= @user.name %>さんがフォローしている人</h2>
+    <h1 class="h4"><%= @user.name %>さんがフォローしている人</h1>
     <div class="col-md-8">
         <% @user.following_relationships.each do |f| %>
         <% @followinguser = User.find(f.followed_id) %>
