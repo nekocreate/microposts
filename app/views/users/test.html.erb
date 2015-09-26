@@ -1,6 +1,19 @@
 動作テスト用のページです。
 
-<%= @user = User.find_by(params[:id]) %>
+<a class="btn btn-primary btn-xs" href="/users/1/tweet">つぶやきページ</a>
+
+
+<a class="btn btn-success btn-xs" href="/users/1/tweet">つぶやきページ</a>
+
+
+
+
+
+
+
+
+
+<%= @user = User.find_by_id(params[:id]) %>
 <hr />
 
 <%= Micropost.last.id %>
@@ -22,7 +35,7 @@ test:
 <%# record.save! %>
 
 強制的に入れた画像<br />
-<%= image_tag Micropost.find_by(id: 118).image %>
+<%#= image_tag Micropost.find_by(id: 118).image %>
 
 
 <hr />

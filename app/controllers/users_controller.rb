@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     # @users = User.all だと全てのuserのものが入ってしまうのでだめ。
     
-    @microposts = @user.microposts # ユーザーに紐付いたマイクロポストを代入
+    @microposts = @user.microposts.order(created_at: :desc) # ユーザーに紐付いたマイクロポストを代入
     @micropost = Micropost.new
   end
   
@@ -90,7 +90,8 @@ class UsersController < ApplicationController
   
   # userの動作検証用
   def test
-    @user= User.micropost.find(params[:id])
+    #@user= User.microposts.find(params[:id])
+    @user = User.find(params[:id])
   end
 
 
@@ -102,9 +103,16 @@ class UsersController < ApplicationController
   # お気に入り
   def favorite
     @user = User.find(params[:id]) # お気に入り一覧を表示するページ(user)のidをインスタンス@userとして渡す！
-    @favo_items = @user.favo_items.includes(:user).order(created_at: :desc).page(params[:page]).per(1)
+    @favo_items = @user.favo_items.includes(:user).order(created_at: :desc).page(params[:page]).per(10)
   end
 
+  # ユーザーの退会
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:success] = "あなたの登録情報を削除しました。"
+    redirect_to root_path
+  end
 
   private
   

@@ -17,8 +17,9 @@
         <li class="list-group-item">住まい：<%= localuser.area %></li>
         <li class="list-group-item">プロフィール：<%= localuser.profile %></li>
         <li class="list-group-item">
-            <% @user = localuser %>
-            <% if current_user != @user %><%# current_userと表示しているページのuserが違う場合 つまり他userのページを表示している場合%>
+        <% @user = localuser %>
+        <% if current_user != @user %><%# current_userと表示しているページのuserが違う場合 つまり他userのページを表示している場合%>
+            <div class="follow_form">
                 <div id="follow_form_<%= @user.id %>">
                 <% if current_user.following?(@user) %><%# フォローしている場合 %>
                     <%= render 'unfollow' %><%# _unfollow.html.erbをrender %>
@@ -26,7 +27,8 @@
                     <%= render 'follow' %><%# そうでなければ_follow.html.erbをrender %>
                 <% end %>
                 </div>
-            <% end %>
+            </div>
+        <% end %>
         </li>
     </ul>
 </div>

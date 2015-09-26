@@ -27,5 +27,12 @@
             <%= f.submit "Update Profile", class: "btn btn-large btn-primary" %>
         
         <% end %>
+
+        <p style="margin:50px;"></p>
+        <h2 class="h3">アカウントを削除したい場合はこちら</h2>
+        
+        <%= link_to "アカウントを削除する", user_path(@user), class: "btn btn-large btn-warning",
+                    method: :delete, data: {confirm: "本当にアカウントを削除してもいいですか？"} %>
     </div>
 </div>
+

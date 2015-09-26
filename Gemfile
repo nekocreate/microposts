@@ -44,7 +44,11 @@ gem 'carrierwave'
 # gem 'rmagick'
 # gem 'rmagick', '2.15.4'
 
+# 上記のrmagickではなくmini_magickを使う事とした
 gem 'mini_magick'
+
+# carrierwaveでアップロードした画像をcloudinaryに保存するためのgem
+gem 'cloudinary'
 
 # lightbox2
 gem 'lightbox2-rails'

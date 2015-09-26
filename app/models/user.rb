@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     mount_uploader :profileimage, ImageUploader
 
     # has_many関連付けを宣言する場合、相手のモデル名は「複数形」
-    has_many :microposts
+    has_many :microposts, dependent: :destroy
     
     ### あるuserがフォローしている人の実装 ここから###
     # class_nameとしてRelationshipモデルを指定
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
                                          dependent:  :destroy
     
     has_many :favoing_microposts, through: :favoing_relationfavotweets, source: :tweet
-    ### つぶやきをふぁぼするリレーション関係の実装 ここから    
+    ### つぶやきをふぁぼするリレーション関係の実装 ここまで  
 
 
     # つぶやきをふぁぼる

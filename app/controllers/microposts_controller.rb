@@ -17,22 +17,30 @@ class MicropostsController < ApplicationController
     end
     
     def destroy
+        #### 以下のコードは、has_many dependent destroyを記述しない場合の方法ですが、こういう方法もあると言うことで、消さずに残しておきたい。
         #### 親つぶやきを削除する前に、そのつぶやきをretweetしているつぶやきがあれば全て削除する ここから
-        @id = params[:id] # deleteしたときに送られたparamsの中のid(micropostのid)を@idに代入
-        if Micropost.find_by_retweetid(@id) #retweetidカラムに@idが存在したら
-            Micropost.destroy_all(retweetid: @id) # retweetid の値が @id と一致するレコードを全て削除
-        end
+        #@id = params[:id] # deleteしたときに送られたparamsの中のid(micropostのid)を@idに代入
+        #if Micropost.find_by_retweetid(@id) #retweetidカラムに@idが存在したら
+        #    Micropost.destroy_all(retweetid: @id) # retweetid の値が @id と一致するレコードを全て削除
+        #end
         #### 親つぶやきを削除する前に、そのつぶやきをretweetしているつぶやきがあれば全て削除する ここまで
+        
+        # = request.referrer
+        #render text: request.referrer
         
         @micropost = current_user.microposts.find_by(id: params[:id])
         return redirect_to root_url if @micropost.nil?
         @micropost.destroy
         flash[:success] = "投稿を削除しました"
         
-        # request.refefferにリダイレクトするが、
-        # リクエストの仕方によってreferrerに値が入ってにない場合はroot_urlにリダイレクトする
-        # 下のコメントアウトは後ほど取り除く。
-        redirect_to request.referrer || root_url
+        if request.referrer.include?("/tweet") # request.referrerに/tweetが含まれていた場合はrequest.referrerはもう存在しないのでroot_pathへリダイレクトする
+            redirect_to root_path
+        else
+            # request.refefferにリダイレクトするが、
+            # リクエストの仕方によってreferrerに値が入ってにない場合はroot_urlにリダイレクトする
+            # 下のコメントアウトは後ほど取り除く。
+            redirect_to request.referrer || root_url
+        end
     end
 
     def retweet
@@ -61,8 +69,6 @@ class MicropostsController < ApplicationController
     #    @micropost = Micropost.find(params[:id])
     #    #@micropost = current_user.microposts.build if logged_in?
     #end
-
-
 
     private
     
