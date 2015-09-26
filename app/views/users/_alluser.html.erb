@@ -30,5 +30,15 @@
             </div>
         <% end %>
         </li>
+
+        <%# 管理者adminよるuser削除 ########################### %>
+        <% if current_user.admin? && current_user != @user %>
+            <li class="list-group-item">
+                <div class="follow_form">
+                <%= link_to "このアカウントを削除する", user_path(@user), class: "btnlink btnlink-large btn-danger",
+                            method: :delete, data: {confirm: "本当にアカウントを削除してもいいですか？"} %>
+                </div>
+            </li>
+        <% end %>
     </ul>
 </div>

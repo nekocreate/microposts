@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :followings, :followers, :tweet, :favorite # このようにカンマ区切りでリファクタリングできる
-      get 'test' # 動作確認テストに必要！
     end
     
     collection do

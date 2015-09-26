@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  # このUserController内の処理を実行する前にまず行うこと！
-  before_action :admin_user, only: [:edit, :update]
+  # edit update の前に行うこと
+  before_action :principal_user, only: [:edit, :update]
   
   def show
     
@@ -110,8 +110,12 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    flash[:success] = "あなたの登録情報を削除しました。"
-    redirect_to root_path
+    flash[:success] = "アカウントを削除しました。"
+    if admin_user
+      redirect_to users_path
+    else
+      redirect_to root_path
+    end
   end
 
   private
@@ -122,9 +126,11 @@ class UsersController < ApplicationController
                                   :password_confirmation, :profileimage, :profileimage_cache)
   end
   
-  
-  def admin_user
-    @user = User.find(params[:id]) # 現在のURLの:idに一致するユーザーを@userに代入
-    redirect_to root_path unless current_user == @user # current_userと@userが別人ならroot_pathにリダイレクト
+  # admin_user 以外かつ本人以外の場合は、root_pathへリダイレクト
+  def principal_user
+    if current_user != admin_user
+      @user = User.find(params[:id]) # 現在のURLの:idに一致するユーザーを@userに代入
+      redirect_to root_path unless current_user == @user # current_userと@userが別人ならroot_pathにリダイレクト
+    end
   end
 end
