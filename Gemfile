@@ -56,7 +56,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 # carrierwaveでアップロードした画像をcloudinaryに保存するためのgem
-##gem 'cloudinary'
+gem 'cloudinary'
 
 # lightbox2
 gem 'lightbox2-rails'
