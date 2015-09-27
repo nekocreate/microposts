@@ -3,7 +3,7 @@ class Micropost < ActiveRecord::Base
   validates :user_id, presence: true
   
   validates :content, presence: true, length: { maximum: 140 }, if: :no_image?, on: :create # imageがないときだけこのバリデーションを適用
-  validates :content, length: { maximum: 5 }, if: :aru_image?, on: :create # imageがないときだけこのバリデーションを適用
+  validates :content, length: { maximum: 140 }, if: :aru_image?, on: :create # imageがあるときだけこのバリデーションを適用
   
   def no_image? # はじめは、 image? と書いていたが、読みやすく！とご指摘を受け no_image? と修正した。
     image.blank? # 中身が空か、または入れものそのものが存在しないときの判定
