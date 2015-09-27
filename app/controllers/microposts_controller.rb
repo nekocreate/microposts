@@ -4,15 +4,18 @@ class MicropostsController < ApplicationController
     before_action :logged_in_user, only: [:create]
     
     def create
-        #render text: micropost_params
-        
         @micropost = current_user.microposts.build(micropost_params)
         if @micropost.save
             flash[:success] = "投稿しました"
             redirect_to root_url
         else
-            @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
+            # render text: @micropost.errors.inspect ##, @messages={:content=>["は3文字以上で入力してください"]}>
+            #@micropost_errors = @micropost.errors # なぜかバリデーションエラーの内容がテンプレートまで渡らないのでここで定義した
+            @user = current_user
+            flash[:success] = "投稿に失敗しました"
+            @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc).page(params[:page]).per(5)
             render 'static_pages/home'
+
         end
     end
     
@@ -24,9 +27,6 @@ class MicropostsController < ApplicationController
         #    Micropost.destroy_all(retweetid: @id) # retweetid の値が @id と一致するレコードを全て削除
         #end
         #### 親つぶやきを削除する前に、そのつぶやきをretweetしているつぶやきがあれば全て削除する ここまで
-        
-        # = request.referrer
-        #render text: request.referrer
         
         @micropost = current_user.microposts.find_by(id: params[:id])
         return redirect_to root_url if @micropost.nil?
@@ -44,10 +44,8 @@ class MicropostsController < ApplicationController
     end
 
     def retweet
-        #render text: params[:micropost][:retweetid]
     	@micropost = current_user.microposts.build(micropost_params)
-    # render text: params[:retweetid]
-    	if @micropost.save
+    	if @micropost.save(validate: false) # retweetアクションのみバリデーションを行いたくない場合、@micropost.saveの引数にvalidate: false を指定
             if nil != record = Micropost.where(id: params[:micropost][:retweetid]).first # retweetの親レコードを取得
                 oya_image = record.image # imageの値を取得
                 if oya_image.present? # 親レコードにimageがあれば
@@ -59,8 +57,10 @@ class MicropostsController < ApplicationController
             flash[:success] = "Retweet成功"
             redirect_to root_url
     	else
+    	    @user = current_user
     		flash[:error] = "Retweet失敗"
-            @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
+            #@feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
+            @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc).page(params[:page]).per(5)
             render 'static_pages/home'
     	end
     end
