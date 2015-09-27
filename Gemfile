@@ -1,17 +1,20 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', group: :development
-# 本番ではpostgressを使用する
-gem 'pg', group: :production
 
+group :development do
+  gem 'sqlite3'
+end
 
-# この gem はアプリが Heroku 上で動作できるように、Rails の動作を変更します。例えば、ログは保存先が変更され、
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+
+# rails_12factorはアプリが Heroku 上で動作できるように、Rails の動作を変更します。例えば、ログは保存先が変更され、
 # 静的アセット(アプリの画像、スタイルシート、JavaScript ファイル) は Heroku 向けに微調整が加えられています。
-gem 'rails_12factor', group: :production
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -53,7 +56,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 # carrierwaveでアップロードした画像をcloudinaryに保存するためのgem
-gem 'cloudinary'
+##gem 'cloudinary'
 
 # lightbox2
 gem 'lightbox2-rails'
