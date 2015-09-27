@@ -46,20 +46,20 @@ class MicropostsController < ApplicationController
     def retweet
     	@micropost = current_user.microposts.build(micropost_params)
     	if @micropost.save(validate: false) # retweetアクションのみバリデーションを行いたくない場合、@micropost.saveの引数にvalidate: false を指定
-            if nil != record = Micropost.where(id: params[:micropost][:retweetid]).first # retweetの親レコードを取得
-                oya_image = record.image # imageの値を取得
-                if oya_image.present? # 親レコードにimageがあれば
-                    record = Micropost.where(id: Micropost.last.id).first # 最後のレコード(直前に投稿されたレコード)にimageを強制的に入れる
-                    record.image = oya_image # imageを入れる
-                    record.save!
-                end
-            end
+    	    #### 以下はcloud9では動くが、HerokuでAdd-on Cloudinaryを使うと動かない 一応コードは消さずに残しておく######
+            #if nil != record = Micropost.where(id: params[:micropost][:retweetid]).first # retweetの親レコードを取得
+            #    oya_image = record.image # imageの値を取得
+            #    if oya_image.present? # 親レコードにimageがあれば
+            #        record = Micropost.where(id: Micropost.last.id).first # 最後のレコード(直前に投稿されたレコード)にimageを強制的に入れる
+            #        record.image = oya_image # imageを入れる
+            #        record.save!
+            #    end
+            #end
             flash[:success] = "Retweet成功"
             redirect_to root_url
     	else
     	    @user = current_user
     		flash[:error] = "Retweet失敗"
-            #@feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
             @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc).page(params[:page]).per(5)
             render 'static_pages/home'
     	end

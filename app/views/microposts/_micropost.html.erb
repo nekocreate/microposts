@@ -9,11 +9,22 @@
         <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
         <div class="content"><%= micropost.content %></div>
     
+        <%# このmicropostにimageがある場合 ############################################################################ %>
         <% if micropost.image? %>
             <div class="content">
                 <%#= image_tag micropost.image.thumb.url %><%# carrierwaveのサムネイルを表示させることもできる %>
                 <%= link_to image_tag(micropost.image.url, :class => "micropost_image" ), micropost.image.url, :rel => "lightbox" %><%# lightbox2によるモーダル表示 %>
             </div>
+        <% end %>
+        
+        <%# このmicropostがリツィートした側の投稿かつretweetidカラムに値がある場合 #################################### %>
+        <% if micropost.retweetid.present? %>
+            <% moto_micropost = Micropost.find_by(id: micropost.retweetid) %><%# 親つぶやきのレコードを取得 %>
+            <% if moto_micropost.image? %><%# imageがある場合 %>
+                <div class="content">
+                    <%= link_to image_tag(moto_micropost.image.url, :class => "micropost_image" ), moto_micropost.image.url, :rel => "lightbox" %><%# lightbox2によるモーダル表示 %>
+                </div>
+            <% end %>
         <% end %>
 
         <span class="timestamp">
